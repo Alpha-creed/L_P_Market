@@ -1,0 +1,1 @@
+export const Logout = <i class="ri-logout-circle-r-line"></i>
