@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
-import background from "../../Assests/images/login.png";
-import { Button, Form, Input } from "antd";
-import {Link} from "react-router-dom"
+import background from "../../Assests/images/register.jpg";
+import { Button, Form, Input, message } from "antd";
+import {Link, useNavigate} from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { setLoader } from "../../redux/loadersSlice";
+import { RegisterUser } from "../../apicalls/users";
 
 const rules = [
   {
@@ -55,7 +58,29 @@ function Register () {
         color:"#9E9E9E"
     `
 
-  const onFinish = () => {};
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+  const onFinish = async(values) => {
+    try {
+      dispatch(setLoader(true))
+      const response = await RegisterUser(values);
+      dispatch(setLoader(false))
+      if(response.success){
+        navigate("/login")
+        message.success(response.message)
+      }else{
+        throw new Error(response.message)
+      }
+    } catch (error) {
+      dispatch(setLoader(false))
+      message.error(error.message)
+    }
+  };
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      navigate("/")
+    }
+  },[])
   return (
     <Overlay>
       <LoginOv>
@@ -80,7 +105,7 @@ function Register () {
           </BtnCover>
     <FooterCover>
         <Footer>
-            Don't have an Account?<Link to="/login" style={{marginRight:"2px",color:"#405138",textDecoration:"none"}}>Register</Link>
+            Already have an account?<Link to="/login" style={{marginRight:"2px",color:"#405138",textDecoration:"none"}}>Login</Link>
         </Footer>
     </FooterCover>
         </Form>

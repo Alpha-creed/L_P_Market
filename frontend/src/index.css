@@ -1,0 +1,28 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+input,select,textarea{
+    min-height: 45px;
+    border:1px solid #b9b9b9;
+    width:100%;
+}
+
+input:focus,select:focus,textarea:focus{
+    outline:none;
+    border:1px solid #6c6c6c;
+    box-shadow:none;
+}
+
+button{
+    height:45px;
+    box-shadow: none;
+}
+i{
+    font-size: 20px;
+}
+.max-width{
+    max-width: max-content;
+}

@@ -7,12 +7,14 @@ const cors = require("cors");
 require("dotenv").config();
 
 const userRoute = require("./routes/userRoutes")
+const productRoute = require("./routes/ProductRoutes")
 
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use("/api/user",userRoute)
+app.use("/api/product",productRoute)
 
 const server = ()=>{
     db()

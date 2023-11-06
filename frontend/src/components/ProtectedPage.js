@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {useNavigate} from "react-router-dom"
 import styled from 'styled-components'
 import { Logout } from '../Assests/icons'
 import { setLoader } from '../redux/loadersSlice'
+import { GetCurrentUser } from '../apicalls/users'
+import { setUser } from '../redux/userSlice'
+import { message } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 
-function ProtectedPage({children}) {
+function ProtectedPage({ children }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user} = useSelector((state)=>state.users);
@@ -46,17 +49,27 @@ function ProtectedPage({children}) {
 
     const validationToken = async()=>{
         try {
-            
+            dispatch(setLoader(true))
+            const response = await GetCurrentUser();
+            dispatch(setLoader(false))
+            if(response.success){
+               dispatch(setUser(response.data));
+            }else{
+                navigate("/login")
+                message.error(response.message);
+            }
         } catch (error) {
-            
+            dispatch(setLoader(false));
+            navigate("/login")
+            message.error(error.message)
         }
     } 
     useEffect(()=>{
         if(localStorage.getItem("token")){
             validationToken();
-
         }else{
-            navigate("/login")
+            navigate('/login');
+
         }
     },[])
 
@@ -82,20 +95,16 @@ function ProtectedPage({children}) {
             <Noti>
 
             </Noti>
-            {/* <Logout onClick={()=>{
-                localStorage.removeItem("token");
-                navigate("/login")
-            }}></Logout> */}
-            <i className="ri-logout-circle-r-line"
+             <i className="ri-logout-circle-r-line"
                 onClick={()=>{
                     localStorage.removeItem("token");
                     navigate("/login");
                 }}
             ></i>
-        </Users>
+        </Users> 
       </Header>
       {/* body */}
-            <Layout>{children}</Layout>
+            <div>{children}</div>
     </div>
     )
   )
