@@ -38,7 +38,7 @@ const  Home=()=> {
   },[filter]);
   const Overlay = styled.div`
     display:flex;
-    gap:10px;
+    gap:5px;
   `
   const FiltDiv = styled.div`
     display:flex;
@@ -51,6 +51,7 @@ const  Home=()=> {
   const NavBar = styled.div`
     display:flex;
     gap:10px;
+    margin-bottom:10px;
     align-items:center;
   `
   const FilterIcon = styled.i`
@@ -65,10 +66,13 @@ const  Home=()=> {
     height:20px;
   `
   const ProductOverlay = styled.div`
-    display:grid;
-    grid-template-columns:${props=>props.showFilters?'repeat(4,minimax(0,1fr))':'repeat(5,minimax(0,1fr))'};
-    gap:40px;
-  `
+   display:grid;
+    gap:20px;
+    grid-template-columns: ${props =>
+      props.showFilters ? 'repeat(4, minmax(0, 1fr))' : 'repeat(5, minmax(0, 1fr))'};
+      margin:${props=>props.showFilters?'0px':'10px'};
+
+      `
   const ProductDetails = styled.div`
     border:1px solid #3F3131;
     border-radius:5px;
@@ -76,6 +80,7 @@ const  Home=()=> {
     flex-direction:column;
     gap:5px;
     cursor:pointer;
+
   `
   const ProductImg = styled.img`
     width:100%;

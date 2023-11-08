@@ -53,13 +53,14 @@ function Filters({showFilters,setShowFilters,filters,setFilters}) {
     const FiltersOverlay = styled.div`
         width:300px;
         display:flex;
-        flex-direction:column;   
+        flex-direction:column; 
+        margin-left:20px;  
     `
     const FiltDiv = styled.div`
         display:flex;
         justify-content:space-between;
         align-items:center;
-        margin:5px 0;
+        margin:20px 0;
     `
     const FiltHeader = styled.h3`
         color:#470101;
@@ -71,7 +72,7 @@ function Filters({showFilters,setShowFilters,filters,setFilters}) {
         display:flex;
         flex-direction:column;
         gap:4px;
-        margin:10px 0;
+        margin:5px 0;
     `
     const CatHeader = styled.h4`
         color:#696969;
@@ -79,7 +80,7 @@ function Filters({showFilters,setShowFilters,filters,setFilters}) {
     const CatOverlay = styled.div`
         display:flex;
         flex-direction:column;
-        gap:10px;
+        gap:5px;
     `
     const CatDetails = styled.div`
         display:flex;

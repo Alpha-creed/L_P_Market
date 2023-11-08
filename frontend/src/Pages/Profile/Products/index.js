@@ -87,7 +87,7 @@ function Product() {
             render:(text,record)=>{
                 return (
                     <ActionOverlay>
-                        <i className="ri-delete-back-fill"
+                        <i className="ri-delete-back-2-fill"
                             onClick={()=>{
                                 deleteProduct(record.id);
                             }}
