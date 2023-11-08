@@ -109,7 +109,7 @@ function Product() {
         }
     ]
     useEffect(()=>{
-        getData();
+       getData();
     },[])
     const ShowBid = styled.span`
         text-decoration:underline;

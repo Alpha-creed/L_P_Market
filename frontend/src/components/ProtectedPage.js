@@ -5,13 +5,17 @@ import { Logout } from '../Assests/icons'
 import { setLoader } from '../redux/loadersSlice'
 import { GetCurrentUser } from '../apicalls/users'
 import { setUser } from '../redux/userSlice'
-import { message } from 'antd'
+import { Avatar, Badge, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
+import { GetAllNotice, ReadAllNotice } from '../apicalls/notice'
+import Notice from './notice'
 
 function ProtectedPage({ children }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user} = useSelector((state)=>state.users);
+    const [notice = [],setNotice] = useState([])
+    const [showNotice,setShowNotice] = useState(false)
     const Header = styled.div`
         display:flex;
         justify-content:space-between;
@@ -32,7 +36,6 @@ function ProtectedPage({ children }) {
         padding:2px;
         text-transform:uppercase;
     `
-
     const H1 = styled.h1`
         font-size:25px;
         color:white;
@@ -42,11 +45,9 @@ function ProtectedPage({ children }) {
         margin-right:15px;
         cursor:pointer;
     `
-
-    const Layout = styled.div`
+    const Lay = styled.div`
         padding:25px;
     `
-
     const validationToken = async()=>{
         try {
             dispatch(setLoader(true))
@@ -64,9 +65,36 @@ function ProtectedPage({ children }) {
             message.error(error.message)
         }
     } 
+
+    const getNotice = async()=>{
+        try {
+            const response = await GetAllNotice();
+            if(response.success){
+                setNotice(response.data);
+            }else{
+                throw new Error(response.message)
+            }
+        } catch (error) {
+            message.error(error.message)
+        }
+    }
+
+    const readNotice = async()=>{
+        try {
+            const response = await ReadAllNotice();
+            if(response.success){
+                getNotice();
+            }else{
+                throw new Error(response.message)
+            }
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
     useEffect(()=>{
         if(localStorage.getItem("token")){
             validationToken();
+            getNotice();
         }else{
             navigate('/login');
 
@@ -93,7 +121,17 @@ function ProtectedPage({ children }) {
             >{user.name}</UserName>
             {/* notification-bar */}
             <Noti>
-
+                <Badge count = {notice?.filter((noti)=>!noti.read).length}
+                    onClick={()=>{
+                        readNotice();
+                        setShowNotice(true);
+                    }}
+                >
+                    <Avatar
+                        size="medium"
+                        icon={<i className="ri-shield-flash-line"></i>}
+                    />
+                </Badge>
             </Noti>
              <i className="ri-logout-circle-r-line"
                 onClick={()=>{
@@ -105,6 +143,15 @@ function ProtectedPage({ children }) {
       </Header>
       {/* body */}
             <div>{children}</div>
+    {/* notification-body */}
+    {
+        <Notice
+            notification={notice}
+            reloadNotification={getNotice}
+            showNotification={showNotice}
+            setShowNotification={setShowNotice}
+        />
+    }
     </div>
     )
   )

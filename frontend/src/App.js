@@ -28,9 +28,7 @@ function App() {
         <Route
           path="/login"
           element={
-            // <ProtectedPage>
               <Login />
-            //  </ProtectedPage>
           }
         />
         <Route
@@ -60,9 +58,7 @@ function App() {
         <Route
           path="/register"
           element={
-            // <ProtectedPage>
               <Register />
-            //  </ProtectedPage>
           }
         />
       </Routes>

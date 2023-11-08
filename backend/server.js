@@ -8,13 +8,21 @@ require("dotenv").config();
 
 const userRoute = require("./routes/userRoutes")
 const productRoute = require("./routes/ProductRoutes")
+const noticeRoute = require("./routes/noticeRoute")
+const bidRoute = require("./models/bidModel")
 
-
+//middleware
+app.use(cors(corsOption))
+var corsOption = {
+    origin:"http://localhost:3000"
+}
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use("/api/user",userRoute)
 app.use("/api/product",productRoute)
+app.use("/api/notice",noticeRoute)
+app.use("/api/bids",bidRoute)
 
 const server = ()=>{
     db()

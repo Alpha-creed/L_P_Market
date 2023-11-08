@@ -24,6 +24,7 @@ const  Home=()=> {
       dispatch(setLoader(true));
       const response = await GetProducts(filter);
       dispatch(setLoader(false))
+      console.log(response)
       if(response.success){
         setProduct(response.data);
       }
@@ -35,7 +36,9 @@ const  Home=()=> {
 
   useEffect(()=>{
     getData();
+    // console.log(getData())
   },[filter]);
+  
   const Overlay = styled.div`
     display:flex;
     gap:5px;
@@ -125,12 +128,13 @@ const  Home=()=> {
           }
           <SearchBar type="text" placeholder="Search Product here"/>          
         </NavBar>
+
           <ProductOverlay showFilters={showFilters}>
                 {product?.map((prod)=>{
                   return(
                     <ProductDetails
                       key={prod}
-                      onClick={()=>navigate(`/product/${product._id}`)}
+                       onClick={()=>navigate(`/product/${prod._id}`)}
                     > 
                       <ProductImg
                         src={prod.images[0]}

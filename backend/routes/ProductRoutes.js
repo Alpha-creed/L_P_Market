@@ -4,13 +4,25 @@ const authMiddleware = require("../middleware/authMiddleware");
 const cloudinary = require("../db/cloudinaryConfig");
 const multer = require("multer");
 const User = require("../models/userModel");
+const Notice = require("../models/noticeModel")
 
 //add a new product
 router.post("/add-product", authMiddleware, async (req, res) => {
   try {
     const newProduct = new Product(req.body);
     await newProduct.save();
-    //TODO:send notice to admin
+    //send notice to admin
+    const admin = await User.find({role:"admin"});
+    admin.forEach(async(ad)=>{
+      const newNotice = new Notice({
+        user:ad._id,
+        message:`New product added by ${req.user.name}`,
+        title:"New product",
+        onClick:`/admin`,
+        read:false,
+      })
+      await newNotice.save();
+    })
     res.send({
       success: true,
       message: "Product added successfully",
@@ -152,8 +164,14 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
       status,
     });
-    //TODO:send notice to seller
-
+    //send notice to seller
+    const newNotice = new Notice({
+      user:updatedProduct.seller,
+      message:`Your Product ${updatedProduct.name} has been ${status}`,
+      title:"Product Status Updated",
+      read:false,
+    })
+    await newNotice.save();
     res.send({
       success: true,
       message: "Product status updated successfully",
