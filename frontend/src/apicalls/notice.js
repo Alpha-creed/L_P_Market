@@ -26,7 +26,7 @@ export const GetAllNotice = async()=>{
 }
 
 //delete a notification
-export const DeleteNotice=async(id)=>{
+export const DelNotice=async(id)=>{
     try {
         const response = await axiosInstance.delete(
             `/api/notice/delete-notice/${id}`

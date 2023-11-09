@@ -6,8 +6,10 @@ import { Button, Table, message } from 'antd';
 import { styled } from 'styled-components';
 import moment from "moment"
 import ProductsForm from './ProductsForm';
+import Bids from './Bids';
 
 function Product() {
+    const [showBids,setShowBids] = useState(false)
     const [selectedProduct,setSelectedProduct] = useState(null);
     const [products,setProducts] = useState([]);
     const [showProductForm,setShowProductForm] = useState(false);
@@ -33,6 +35,7 @@ function Product() {
         try {
             dispatch(setLoader(true));
             const response = await GetProducts({seller:user._id});
+            console.log(response)
             dispatch(setLoader(false));
             if(response.success){
                 setProducts(response.data);
@@ -89,7 +92,7 @@ function Product() {
                     <ActionOverlay>
                         <i className="ri-delete-back-2-fill"
                             onClick={()=>{
-                                deleteProduct(record.id);
+                                deleteProduct(record._id);
                             }}
                         ></i>
                         <i className="ri-edit-circle-line"
@@ -110,6 +113,7 @@ function Product() {
     ]
     useEffect(()=>{
        getData();
+       console.log(selectedProduct)
     },[])
     const ShowBid = styled.span`
         text-decoration:underline;
@@ -152,6 +156,15 @@ function Product() {
                 setShowProductForm={setShowProductForm}
                 selectedProduct={selectedProduct}
                 getData={getData}/>
+        )
+      }
+      {
+        showBids &&(
+            <Bids
+                showBidsModal={showBids}
+                setShowBidsModal={setShowBids}
+                selectedProduct={selectedProduct}
+            />
         )
       }
     </div>

@@ -4,6 +4,7 @@ import { setLoader } from "../../redux/loadersSlice";
 import { PlaceNewBid } from "../../apicalls/products";
 import { Form, Input, Modal, message } from "antd";
 import { styled } from "styled-components";
+import { AddNotification } from "../../apicalls/notice";
 
 const rules = [
   {

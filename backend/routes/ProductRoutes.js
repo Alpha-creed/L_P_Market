@@ -4,7 +4,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 const cloudinary = require("../db/cloudinaryConfig");
 const multer = require("multer");
 const User = require("../models/userModel");
-const Notice = require("../models/noticeModel")
+const Notice = require("../models/noticeModel");
+const { Promise } = require("mongoose");
 
 //add a new product
 router.post("/add-product", authMiddleware, async (req, res) => {
@@ -13,6 +14,7 @@ router.post("/add-product", authMiddleware, async (req, res) => {
     await newProduct.save();
     //send notice to admin
     const admin = await User.find({role:"admin"});
+
     admin.forEach(async(ad)=>{
       const newNotice = new Notice({
         user:ad._id,
@@ -169,6 +171,7 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
       user:updatedProduct.seller,
       message:`Your Product ${updatedProduct.name} has been ${status}`,
       title:"Product Status Updated",
+      onClick:`/profile`,
       read:false,
     })
     await newNotice.save();

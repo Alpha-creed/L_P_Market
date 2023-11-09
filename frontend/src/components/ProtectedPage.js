@@ -73,9 +73,11 @@ function ProtectedPage({ children }) {
                 setNotice(response.data);
             }else{
                 throw new Error(response.message)
+               
             }
         } catch (error) {
             message.error(error.message)
+            console.log(error)
         }
     }
 

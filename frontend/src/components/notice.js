@@ -5,6 +5,7 @@ import {setLoader} from "../redux/loadersSlice"
 import {message,Modal} from "antd"
 import moment from "moment"
 import {styled} from "styled-components"
+import {DelNotice} from "../apicalls/notice"
 
 function Notice({
     notification=[],
@@ -17,7 +18,7 @@ function Notice({
     const DeleteNotice = async(id)=>{
         try {
             dispatch(setLoader(true));
-            const response = await DeleteNotice(id);
+            const response = await DelNotice(id);
             dispatch(setLoader(false))
             if(response.success){
                 message.success(response.message);
@@ -67,7 +68,7 @@ function Notice({
         width={1000}
         >
             <Overlay>
-                {notification.map((notice)=>{
+                {notification.map((notice)=>(
                     <NotiOverlay key={notice._id}>
                         <NotiDetail>
                             <div
@@ -93,7 +94,7 @@ function Notice({
                             ></i>
                         </NotiDetail>
                     </NotiOverlay>
-                })}
+                ))}
             </Overlay>
     </Modal>
   )

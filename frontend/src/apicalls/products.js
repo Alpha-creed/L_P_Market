@@ -4,7 +4,8 @@ import {axiosInstance} from "./axiosInstance"
 export const AddProduct = async(payload)=>{
     try {
         const response = await axiosInstance.post(
-            "/api/product/add-product",payload
+            "/api/product/add-product",
+            payload
         );
         return response.data;
     } catch (error) {

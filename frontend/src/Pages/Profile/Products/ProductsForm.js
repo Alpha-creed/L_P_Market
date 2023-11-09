@@ -38,6 +38,7 @@ function ProductsForm({
   getData,
 }) {
   const dispatch = useDispatch();
+  const formRef = useRef(null);
   const [selectedTab = "1", setSelectedTab] = useState("1");
   const { user } = useSelector((state) => state.users);
   const onFinish = async (values) => {
@@ -64,7 +65,6 @@ function ProductsForm({
       message.error(error.message);
     }
   };
-  const formRef = useRef(null);
   useEffect(() => {
     if (selectedProduct) {
       formRef.current.setFieldsValue(selectedProduct);
