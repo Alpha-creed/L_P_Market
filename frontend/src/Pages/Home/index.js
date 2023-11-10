@@ -36,7 +36,6 @@ const  Home=()=> {
 
   useEffect(()=>{
     getData();
-    // console.log(getData())
   },[filter]);
   
   const Overlay = styled.div`

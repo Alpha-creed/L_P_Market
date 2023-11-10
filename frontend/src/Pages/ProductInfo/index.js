@@ -15,25 +15,27 @@ function ProductInfo() {
   const [product,setProduct] = useState(null);
   const dispatch=useDispatch();
   const navigate=useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
   const getData = async()=>{
     try {
       dispatch(setLoader(true))
       const response = await GetProductById(id);
       dispatch(setLoader(false));
       if(response.success){
-        // const bidsResponse = await GetAllBids({product:id});
-        // setProduct({
-        //   ...response.data,
-        //   bids:bidsResponse.data,
-        // })
-        setProduct(
-        response.data
-        )
+        console.log(id);
+        const bidsResponse = await GetAllBids({product:id});
+        setProduct({
+          ...response.data,
+          bids: bidsResponse.data,
+        })
+        // setProduct(
+        // response.data
+        // )
       }
     } catch (error) {
       dispatch(setLoader(false))
       message.error(error.message)
+      console.log(error)
     }
   }
   useEffect(()=>{
@@ -235,8 +237,8 @@ function ProductInfo() {
                 reloadData={getData}
                 showBidModal = {showAddNewBid}
                 setShowBidModal={setShowAddNewBid}
-              />
-            )}
+              />)
+            }
     </ProdOverlay>
     )
     

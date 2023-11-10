@@ -109,6 +109,7 @@ export const GetAllBids = async(filters)=>{
             "/api/bids/get-all-bids",
             filters
         );
+        console.log(response)
         return response.data;
     } catch (error) {
         return error.message;

@@ -62,7 +62,7 @@ function Users() {
             title:"Created At",
             dataIndex:"createdAt",
             render:(text,record)=>
-                moment(record.createdt).format("DD-MM-YYYY hh:mm A")
+                moment(record.createdAt).format("DD-MM-YYYY hh:mm A")
             
         },
         {

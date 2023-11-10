@@ -6,14 +6,14 @@ import { Form, Input, Modal, message } from "antd";
 import { styled } from "styled-components";
 import { AddNotification } from "../../apicalls/notice";
 
-const rules = [
-  {
-    required: true,
-    message: "Required",
-  },
-];
 function BidModal({ showBidModal, setShowBidModal, product, reloadData }) {
   const formRef = useRef(null);
+  const rules = [
+    {
+      required: true,
+      message: "Required",
+    }
+  ];
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const onFinish = async (values) => {
@@ -29,14 +29,14 @@ function BidModal({ showBidModal, setShowBidModal, product, reloadData }) {
       if (response.success) {
         message.success("Bid added successfully");
         //send notification to seller
-        await AddNotification({
-          title: "A new bid has been placed",
-          message: `A new bid has been placed on your ${product.name}
-                    by ${user.name} for ${values.bidAmount}`,
-          user: product.seller._id,
-          onClick: `/profile`,
-          read: false,
-        });
+        // await AddNotification({
+        //   title: "A new bid has been placed",
+        //   message: `A new bid has been placed on your ${product.name}
+        //             by ${user.name} for ${values.bidAmount}`,
+        //   user: product.seller._id,
+        //   onClick: `/profile`,
+        //   read: false,
+        // });
         reloadData();
         setShowBidModal(false);
       } else {
@@ -81,6 +81,7 @@ function BidModal({ showBidModal, setShowBidModal, product, reloadData }) {
           </Form.Item>
         </Form>
       </BidOverlay>
+      <h1>Place a bid</h1>
     </Modal>
   );
 }

@@ -10,7 +10,7 @@ router.post("/place-new-bid",authMiddleware,async(req,res)=>{
         res.send({
             success:true,
             message:"Bid placed successfully"
-        })
+        });
     } catch (error) {
         res.send({
             success:false,
@@ -46,6 +46,7 @@ router.post("/get-all-bids",authMiddleware,async(req,res)=>{
             success:false,
             message:error.message
         })
+        console.log(error)
     }
 })
 

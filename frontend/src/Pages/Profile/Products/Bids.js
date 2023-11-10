@@ -17,7 +17,8 @@ function Bids({
         try {
             dispatch(setLoader(true))
             const response = await GetAllBids({
-                product:selectedProduct._id,})
+                product:selectedProduct._id
+            })
                 dispatch(setLoader(false));
                 if(response.success){
                     setBidsData(response.data)
@@ -59,13 +60,14 @@ function Bids({
                         <p>Phone:{record.mobile}</p>
                         <p>Email:{record.buyer.email}</p>
                     </div>
-                )
+                );
             }
-        }
-    ]
+        },
+    ];
     useEffect(()=>{
         if(selectedProduct){
             getData()
+            console.log()
         }
     },[selectedProduct])
     

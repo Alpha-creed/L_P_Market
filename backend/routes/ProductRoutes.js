@@ -5,7 +5,6 @@ const cloudinary = require("../db/cloudinaryConfig");
 const multer = require("multer");
 const User = require("../models/userModel");
 const Notice = require("../models/noticeModel");
-const { Promise } = require("mongoose");
 
 //add a new product
 router.post("/add-product", authMiddleware, async (req, res) => {
